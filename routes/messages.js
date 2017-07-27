@@ -5,48 +5,38 @@ var Message = mongoose.model('Message')
 
 
 router.post('/', function (req, res) {
-  console.log(req.body.body)
   var newMessage = new Message()
   newMessage.generateKey()
-  // TODO: fill in the message body here
+  newMessage.body = req.body.body
+  console.log(newMessage.createdAt)
 
-  var key = 'one-why-try-mind'
-  var body = 'This is my secret. Don\'t tell anyone else.'
-  var time = '2015-08-05T08:40:51.620Z'
-  res.status(201).json({
-    key: key,
-    body: body,
-    created_at: time
+  newMessage.save(function (err, message) {
+    if (err) return console.error(err)
+    res.status(201).json({
+      key: message.key,
+      body: message.body,
+      created_at: message.createdAt
+    })
   })
 })
 
 router.get('/:key', function (req, res) {
-  console.log(req.params.key)
-  if (req.params.key === 'one-why-try-mind') {
-    var key = 'one-why-try-mind'
-    var body = 'This is my secret. Don\'t tell anyone else.'
-    var time = '2015-08-05T08:40:51.620Z'
+  Message.findOne({ key: req.params.key }, function (err, message) {
+    if (err) res.status(404).json({ error: 'Message Not Found' })
     res.status(200).json({
-      key: key,
-      body: body,
-      created_at: time
+      key: message.key,
+      body: message.body,
+      created_at: message.createdAt
     })
-  } else {
-    res.status(404).json({
-      error: 'Message Not Found'
-    })
-  }
+  })
 })
 
 router.delete('/:key', function (req, res) {
   console.log(req.params.key)
-  if (req.params.key === 'one-why-try-mind') {
+  Message.deleteOne({ key: req.params.key }, function (err) {
+    if (err) res.status(404).json({ error: 'Message Not Found' })
     res.sendStatus(204)
-  } else {
-    res.status(404).json({
-      error: 'Message Not Found'
-    })
-  }
+  })
 })
 
 module.exports = router

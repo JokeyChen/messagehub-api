@@ -4,7 +4,7 @@ var chance = require('chance').Chance()
 var MessageSchema = new mongoose.Schema({
   key: String,
   body: String
-})
+}, { timestamps: true })
 
 MessageSchema.methods.generateKey = function () {
   // generate a random four syllable key
