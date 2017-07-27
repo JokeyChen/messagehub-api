@@ -1,12 +1,12 @@
 var express = require('express')
 var mongoose = require('mongoose')
 var morgan = require('morgan')
+var cors = require('cors')
 var bodyParser = require('body-parser')
 var app = express()
 
-// parse application/json
+app.use(cors())
 app.use(bodyParser.json())
-// parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }))
 
 app.use(morgan('tiny'))
