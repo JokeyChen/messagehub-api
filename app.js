@@ -21,7 +21,7 @@ if (!isProduction) {
   mongoose.connect('mongodb://localhost/messagehub')
   mongoose.set('debug', true)
 } else {
-  mongoose.connect('mongodb://production:production@ds119223.mlab.com:19223/messagehub')
+  mongoose.connect(process.env.MONGODB_URI)
 }
 
 require('./models/Message')
