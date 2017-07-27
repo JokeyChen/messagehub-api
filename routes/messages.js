@@ -1,8 +1,15 @@
 var express = require('express')
 var router = express.Router()
+var mongoose = require('mongoose')
+var Message = mongoose.model('Message')
+
 
 router.post('/', function (req, res) {
   console.log(req.body.body)
+  var newMessage = new Message()
+  newMessage.generateKey()
+  // TODO: fill in the message body here
+
   var key = 'one-why-try-mind'
   var body = 'This is my secret. Don\'t tell anyone else.'
   var time = '2015-08-05T08:40:51.620Z'

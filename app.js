@@ -1,10 +1,7 @@
 var express = require('express')
 var morgan = require('morgan')
-var pug = require('pug')
 var bodyParser = require('body-parser')
 var app = express()
-
-app.set('view engine', 'pug')
 
 // parse application/json
 app.use(bodyParser.json())
@@ -13,6 +10,7 @@ app.use(bodyParser.urlencoded({ extended: false }))
 
 app.use(morgan('tiny'))
 
+require('./models/Message')
 app.use('/', require('./routes'))
 
 app.listen(3000, function () {
