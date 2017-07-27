@@ -5,7 +5,7 @@ var Message = mongoose.model('Message')
 
 router.get('/:key', function (req, res, next) {
   Message.findOne({ key: req.params.key }).then(function (message) {
-    if (!message) res.status(404).json({ error: 'Message Not Found' })
+    if (!message) return res.status(404).json({ error: 'Message Not Found' })
 
     res.status(200).json({
       key: message.key,
@@ -16,8 +16,7 @@ router.get('/:key', function (req, res, next) {
 })
 
 router.post('/', function (req, res, next) {
-  console.log(req.params.body)
-  if (!req.params.body) res.status(403).json({ error: 'Body Cannot Be Empty' })
+  if (!req.body.body) return res.status(403).json({ error: 'Body Cannot Be Empty' })
 
   var newMessage = new Message({ body: req.body.body })
   newMessage.generateKey()
