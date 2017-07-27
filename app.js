@@ -18,6 +18,9 @@ if (!isProduction) {
 }
 
 if (!isProduction) {
+  mongoose.connect('mongodb://localhost/messagehub')
+  mongoose.set('debug', true)
+} else {
   mongoose.connect('mongodb://production:production@ds119223.mlab.com:19223/messagehub')
 }
 
@@ -34,20 +37,21 @@ app.use(function(req, res, next) {
 
 /// error handlers
 
-// development error handler
 if (!isProduction) {
+  // development error handler
   app.use(function(err, req, res, next) {
     console.log(err.stack)
     res.status(err.status || 500)
     res.json({ error: err.message })
   })
+} else {
+  // production error handler
+  app.use(function(err, req, res, next) {
+    res.status(err.status || 500)
+    res.json({ error: err.message })
+  })
 }
 
-// production error handler
-app.use(function(err, req, res, next) {
-  res.status(err.status || 500)
-  res.json({ error: err.message })
-})
 
 // finally, let's start our server...
 var server = app.listen( process.env.PORT || 3000, function(){
