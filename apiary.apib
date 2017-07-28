@@ -1,0 +1,65 @@
+FORMAT: 1A
+
+# messagehub
+
+messagehub is a simple API allowing consumers to store and retrieve messages
+
+## Messages Collection [/messages]
+
+### Create a New Message [POST]
+
+Create your own message using this action. It takes a JSON
+object containing a message body. It will automatically generate a key
+which can be used to retrieve the message later.
+
++ Request (application/json)
+
+        {
+            "body": "This is my secret. Don't tell anyone else."
+        }
+
++ Response 201 (application/json)
+
+        {
+            "key": "one-why-try-mind",
+            "body": "This is my secret. Don't tell anyone else.",
+            "created_at": "2015-08-05T08:40:51.620Z"
+        }
+        
++ Response 403 (application/json)
+
+        {
+            "error": "Body Cannot Be Empty"
+        }
+            
+## Message [/messages/{key}]
+
+### Get a Message [GET]
+
+Retrieve the stored message using this action.
+
++ Parameters
+    + key (string) - generated key of the Message
+    
++ Response 200 (application/json)
+
+        {
+            "key": "one-why-try-mind",
+            "body": "This is my secret. Don't tell anyone else.",
+            "created_at": "2015-08-05T08:40:51.620Z"
+        }
+        
++ Response 404 (application/json)
+
+        {
+            "error": "Message Not Found"
+        }
+        
+### Delete a Message [DELETE]
+
+Delete the stored message using this action.
+
++ Parameters
+    + key (string) - generated key of the Message
+
++ Response 204
