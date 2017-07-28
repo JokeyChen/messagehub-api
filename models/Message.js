@@ -3,8 +3,9 @@ var chance = require('chance').Chance()
 
 var MessageSchema = new mongoose.Schema({
   key: String,
-  body: String
-}, { timestamps: true })
+  body: String,
+  createdAt: { type: Date, expires: 60*30, default: Date.now } // expire after 30 minutes
+})
 
 MessageSchema.methods.generateKey = function () {
   // generate a random four syllable key
