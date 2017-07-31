@@ -1,5 +1,5 @@
 {
-  "name": "messagehub-backend",
+  "name": "messagehub-api",
   "version": "0.1.0",
   "description": "Transfer secret message safely",
   "main": "app.js",
